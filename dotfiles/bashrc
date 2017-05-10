@@ -42,5 +42,3 @@ for MODULE in \
     $HOME/.iterm2_shell_integration.bash ; do
     source_file $MODULE
 done
-
-is_interactive && source "$GITDIR"/bash-git-prompt/gitprompt.sh # git prompt
