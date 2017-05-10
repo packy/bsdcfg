@@ -1,0 +1,6 @@
+#!/bin/bash
+
+xprofile () {
+    PROFILE=${1:-"Default"};
+    printf "\e]50;SetProfile=%s\a" "$PROFILE";
+}

@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# for syntax highlightling in emacs, mostly
+
+function is_local() {
+    if [[ "$LOGIN_FROM" == "" ]]; then
+        TTY=$(tty | sed -e "s/.*dev\/\(.*\)/\1/")
+        if [[ "$TTY" != "" ]]; then
+            LOGIN_FROM=$(w | grep $TTY | awk '{ print $3 }')
+        fi
+    fi
+    [[ "$LOGIN_FROM" == "-" ]]
+}
+
+source $HOME/.bash_bootstrap 2>/dev/null || \
+    echo ERROR: Unable to find $HOME/.bash_bootstrap >> /dev/stderr
+
+# turn monitor mode OFF and
+# suppress "[#] Done  /foo/bar" messages
+set +o monitor
+
+if [[ "$TERM" = "dumb" ]] ; then
+  export TERM=xterm
+fi
+
+# I want to manipulate the path first
+source_file $HOME/.bash_path_functions print_err_if_not_found
+
+# add dirs to the FRONT of the PATH
+unshift_path $HOME/bin
+
+# push dirs to the END of the PATH
+# push_path
+
+uniq_path # remove any duplicates in the PATH
+
+# finally, load all the bash customizations
+for DOTFILE in functions aliases ls git ack ; do
+    source_file $HOME/.bash_$DOTFILE
+done
+
+for MODULE in \
+    $HOME/.iterm2_shell_integration.bash ; do
+    source_file $MODULE
+done
+
+is_interactive && source "$GITDIR"/bash-git-prompt/gitprompt.sh # git prompt
