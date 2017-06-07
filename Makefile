@@ -1,6 +1,3 @@
-export gitdir   := $(HOME)/git
-export bindir   := $(HOME)/bin
-
 all: install
 
 .PHONY: install

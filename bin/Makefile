@@ -1,9 +1,8 @@
-srcdir := $(shell pwd)
-files  := $(filter-out Makefile $(wildcard *~), $(wildcard *))
+FILES != ls | grep -v Makefile | grep -v ~
 
 .PHONY: install
-install: $(dotfiles)
+install:
 	@echo Symlinking files in bin...
-	@for FILE in $(files); do \
-	    ln -vsf $(srcdir)/$$FILE $(HOME)/bin/$$FILE; \
+	@for FILE in ${FILES}; do \
+	    ln -vsf ${.CURDIR}/$$FILE $$HOME/bin/$$FILE; \
 	done

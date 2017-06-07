@@ -1,9 +1,8 @@
-srcdir   := $(shell pwd)
-dotfiles := $(filter-out Makefile $(wildcard *~), $(wildcard *))
+DOTFILES != ls | grep -v Makefile | grep -v ~
 
 .PHONY: install
-install: $(dotfiles)
+install:
 	@echo Symlinking dotfiles...
-	@for FILE in $(dotfiles); do \
-	    ln -vsf $(srcdir)/$$FILE $(HOME)/.$$FILE; \
+	@for FILE in ${DOTFILES}; do \
+	    ln -vsf ${.CURDIR}/$$FILE $$HOME/.$$FILE; \
 	done
