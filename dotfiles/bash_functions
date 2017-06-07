@@ -1,6 +1,49 @@
 #!/bin/bash
 
-xprofile () {
+function xprofile () {
     PROFILE=${1:-"Default"};
     printf "\e]50;SetProfile=%s\a" "$PROFILE";
+}
+
+function clean () {
+    rm -fv *~ .*~
+}
+
+function rclean () {
+    find . -name '*~' -o -name '.*~' | xargs rm -fv
+}
+
+function xtitle () {
+    printf "\e]0;%s\007" "$1";
+}
+
+function xsize () {
+    WIDTH=${1:-"80"};
+    HEIGHT=${2:-"50"};
+    printf "\e[8;%d;%dt" $HEIGHT $WIDTH;
+}
+
+function clear () {
+    printf "\e[2J"
+}
+
+function ts () {
+    export TS=$(date '+%Y-%m-%d %H:%M:%S')
+}
+
+# my usual crontab comment
+cron_header () {
+    echo "# min hr day mon     dow       command"
+    echo "# --- -- --- --- -----------  --------------------------------------------------"
+}
+
+# an alternate crontab comment I've played with
+cron_footer () {
+echo "
+# ^ ^ ^ ^ ^           ^- command to execute
+# │ │ │ │ └─ day of week (0 - 6) (0 to 6 are Sunday to Saturday)
+# │ │ │ └─── month (1 - 12)
+# │ │ └───── day of month (1 - 31)
+# │ └─────── hour (0 - 23)
+# └───────── min (0 - 59)"
 }
