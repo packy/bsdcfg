@@ -4,7 +4,7 @@ export bindir   := $(HOME)/bin
 all: install
 
 .PHONY: install
-install: ack
+install:
 	@cd dotfiles && $(MAKE)
 	@cd bin      && $(MAKE)
 
