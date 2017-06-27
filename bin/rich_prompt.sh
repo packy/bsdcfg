@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # for syntax highlightling in emacs, mostly
 
-source bin/prompt-colors.sh
+source $HOME/bin/prompt-colors.sh
 
 function is_production_server () {
     [[ "$HOSTNAME" == "psd-01" ]] || [[ "$HOSTNAME" == "psd-10" ]]
@@ -33,7 +33,7 @@ setPrompt ()
     local _PRODTITLE
     local _PRODPROMPT
     local Time12a="\$(date +%H:%M)"
-    
+
     if is_production_server; then
         _PRODTITLE="[PRODUCTION] "
         _PRODPROMPT="$BrightRedBg$BrightWhiteFg[PRODUCTION]$ResetColor "
