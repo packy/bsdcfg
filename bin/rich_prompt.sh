@@ -77,5 +77,5 @@ fi
 
 if is_production_server; then
   set_term_color_palette --background 770000
-  set_term_titlecolor CC0000
+  set_term_titlecolor FF0000
 fi

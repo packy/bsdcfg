@@ -14,8 +14,6 @@ function is_local() {
 source $HOME/.bash_bootstrap 2>/dev/null || \
     echo ERROR: Unable to find $HOME/.bash_bootstrap >> /dev/stderr
 
-source $HOME/bin/rich_prompt.sh    
-
 # turn monitor mode OFF and
 # suppress "[#] Done  /foo/bar" messages
 set +o monitor
@@ -44,3 +42,5 @@ for MODULE in \
     $HOME/.iterm2_shell_integration.bash ; do
     source_file $MODULE
 done
+
+source $HOME/bin/rich_prompt.sh
