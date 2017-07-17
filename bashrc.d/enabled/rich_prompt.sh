@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # for syntax highlightling in emacs, mostly
 
-source $HOME/bin/prompt-colors.sh
+if [[ ${#ColorNames[*]} = 0 || -z "$IntenseBlack" || -z "$ResetColor" ]]; then
+  resource_file $BASHRC_D/enabled/prompt-colors.sh
+fi
 
 function is_production_server () {
   if [[ "$PRODUCTION_SERVERS" != "" ]]; then
