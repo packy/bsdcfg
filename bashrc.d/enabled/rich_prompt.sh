@@ -4,7 +4,16 @@
 source $HOME/bin/prompt-colors.sh
 
 function is_production_server () {
-    [[ "$HOSTNAME" == "psd-01" ]] || [[ "$HOSTNAME" == "psd-10" ]]
+  if [[ "$PRODUCTION_SERVERS" != "" ]]; then
+    IFS=':' read -r -a array <<< "$PRODUCTION_SERVERS"
+    for index in "${!array[@]}"; do
+      if [[ "${array[index]}" == "$HOSTNAME" ]]; then
+        true
+        return
+      fi
+    done
+  fi
+  false
 }
 
 # gp_format_exit_status RETVAL

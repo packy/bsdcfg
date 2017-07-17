@@ -1,46 +1,56 @@
 #!/usr/bin/env bash
 # for syntax highlightling in emacs, mostly
 
-function is_local() {
-    if [[ "$LOGIN_FROM" == "" ]]; then
-        TTY=$(tty | sed -e "s/.*dev\/\(.*\)/\1/")
-        if [[ "$TTY" != "" ]]; then
-            LOGIN_FROM=$(w | grep $TTY | awk '{ print $3 }')
-        fi
-    fi
-    [[ "$LOGIN_FROM" == "-" ]]
-}
+export GITDIR=$HOME/git
+export CFGDIR=$GITDIR/bsdcfg
+export CFGBIN=$CFGDIR/bin
 
-source $HOME/.bash_bootstrap 2>/dev/null || \
-    echo ERROR: Unable to find $HOME/.bash_bootstrap >> /dev/stderr
-
-# turn monitor mode OFF and
-# suppress "[#] Done  /foo/bar" messages
+# turn monitor mode OFF and suppress "[#] Done  /foo/bar" messages
 set +o monitor
+
+# no more annoying !
+set +H
 
 if [[ "$TERM" = "dumb" ]] ; then
   export TERM=xterm
 fi
 
-# I want to manipulate the path first
-source_file $HOME/.bash_path_functions print_err_if_not_found
+alias echoerr='>&2 echo'
 
-# add dirs to the FRONT of the PATH
-unshift_path $HOME/bin
+BASHRC_D=$HOME/.bashrc.d
+if [[ ! -e $BASHRC_D ]]; then
+    echoerr Symlinking $CFGDIR/bashrc.d to $BASHRC_D...
+    ln -fs $CFGDIR/bashrc.d $BASHRC_D
+fi
 
-# push dirs to the END of the PATH
-# push_path
+export LOAD_COMPOSED_FUNCTIONS=0
+BOOTSTRAP=$BASHRC_D/bootstrap
+if ! source $BOOTSTRAP 2>/dev/null; then
+    echoerr ERROR: Unable to find $BOOTSTRAP
+    return
+fi
 
-uniq_path # remove any duplicates in the PATH
+# finally, load all my bash customizations
+if [[ -e $BASHRC_D ]]; then
+    SCRIPTS=$(find $BASHRC_D/enabled -name "*.sh" -print | sort)
+    for SCRIPT in $SCRIPTS; do
+        source_file $SCRIPT
+    done
+fi
 
-# finally, load all the bash customizations
-for DOTFILE in functions aliases ls ack aim ; do
-    source_file $HOME/.bash_$DOTFILE
-done
+restore_cursor_clear_line
 
-for MODULE in \
-    $HOME/.iterm2_shell_integration.bash ; do
-    source_file $MODULE
-done
+if function_exists unshift_path; then
+    # add dirs to the FRONT of the PATH
+    unshift_path $HOME/bin
+else
+    echoerr "Unable to add directories to front of path; unshift_path() not loaded"
+fi
+
+if function_exists uniq_path; then
+    uniq_path # remove any duplicates in the PATH
+else
+    echoerr "Unable to remove duplicate directories from path; uniq_path() not loaded"
+fi
 
 source $HOME/bin/rich_prompt.sh
