@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function ctrl_c() {
   stty "$saved_stty"
@@ -96,4 +96,3 @@ then
 else
   exit 1
 fi
-

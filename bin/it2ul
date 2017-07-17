@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 trap clean_up EXIT
 _STTY=$(stty -g)      ## Save current terminal setup
@@ -27,7 +27,7 @@ function die() {
 function read_base64_stanza() {
   value=""
   while read line;
-  do 
+  do
     if [ "$line" == "" ]; then
       break
     fi
@@ -95,4 +95,3 @@ then
 else
   die "Unknown status: $status" 1>& 2
 fi
-
