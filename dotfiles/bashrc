@@ -52,5 +52,3 @@ if function_exists uniq_path; then
 else
     echoerr "Unable to remove duplicate directories from path; uniq_path() not loaded"
 fi
-
-source $HOME/bin/rich_prompt.sh
