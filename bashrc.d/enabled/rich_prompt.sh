@@ -63,7 +63,7 @@ setPrompt ()
 
     _TITLE="$_PRODTITLE\u@\h:\w"
 
-    local ps="${_PRODPROMPT}_LAST_COMMAND_INDICATOR_ $BoldGreenFg\h $BrightBlueFg$Time12a$ResetColor \$ "
+    local ps="${_PRODPROMPT}_LAST_COMMAND_INDICATOR_ $BoldGreenFg\h $BrightBlueFg$Time12a$ResetColor \\$ "
     _PROMPT="${ps//_LAST_COMMAND_INDICATOR_/${LAST_COMMAND_INDICATOR}}"
 
     export PS1="\[\e]0;$_TITLE\007\]$_PROMPT"
