@@ -18,6 +18,32 @@ function is_production_server () {
   false
 }
 
+set_term_titlecolor ()
+{
+    perl -e '
+my $color = shift @ARGV;
+my($r,$g,$b) = $color =~ /^([0-f]{2})([0-f]{2})([0-f]{2})$/;
+unless (defined $r && defined $g && defined $b) {
+  if ( ($r,$g,$b) = $color =~ /^([0-f]{1})([0-f]{1})([0-f]{1})$/ ) {
+    ($r,$g,$b) = ( $r x 2, $g x 2, $b x 2 );
+  }
+}
+if ( defined $r && defined $g && defined $b ) {
+  ($r,$g,$b) = ( hex($r), hex($g), hex($b) );
+  print "\033]6;1;bg;red;brightness;$r\a"
+      . "\033]6;1;bg;green;brightness;$g\a"
+      . "\033]6;1;bg;blue;brightness;$b\a"
+}
+elsif ( $color =~ /^d?e?f?a?u?l?t?/i ) {
+  print "\033]6;1;bg;*;default\a";
+}
+else {
+  print STDERR "Unknown color specification: '$color'\n";
+  exit 1;
+}
+' "$@"
+}
+
 # gp_format_exit_status RETVAL
 #
 # echos the symbolic signal name represented by RETVAL if the process was
