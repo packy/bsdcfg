@@ -18,6 +18,13 @@ function is_production_server () {
   false
 }
 
+# first, determine how we base64 encode
+if type b64encode >/dev/null 2>&1; then B64ENC="b64encode -r /dev/null"
+else if type base64 >/dev/null 2>&1; then B64ENC="base64"
+fi; fi
+
+function iTerm2_SetBadge () { iTerm2_1337 SetBadgeFormat=$(echo "$@" | $B64ENC) ;}
+
 # gp_format_exit_status RETVAL
 #
 # echos the symbolic signal name represented by RETVAL if the process was
@@ -87,7 +94,7 @@ if [ -z ${PROMPT_COMMAND_FAIL+x} ]; then
 fi
 
 if is_production_server; then
-  iTerm2_bgcolor    880000
-  iTerm2_titlecolor FF0000
-  printf "\e]1337;SetBadgeFormat=%s\a" $(hostname | b64encode -r foo)
+  iTerm2_bgcolor    800
+  iTerm2_titlecolor 888
+  iTerm2_SetBadge $(hostname)
 fi
