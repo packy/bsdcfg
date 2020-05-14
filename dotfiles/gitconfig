@@ -1,0 +1,88 @@
+#; -*-Conf-*-  Set emacs conf mode
+[user]
+    name = Packy Anderson
+    email = packy@cpan.org
+
+[include]
+    path = ~/.gitconfig_user
+
+[alias]
+    alias = "!sh -c '[ $# = 2 ] && git config --global alias.\"$1\" \"$2\" && exit 0 || echo \"usage: git alias <new alias> <original command>\" >&2 && exit 1' -"
+    aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
+    co = checkout
+    ln = log --name-only
+    uncommit = reset --mixed HEAD~1
+    loggrep = log --perl-regexp --grep
+    stashed = stash list --pretty=stashed
+    jira = log --pretty=jira
+    unpushed = log origin/master..HEAD
+
+[apply]
+    whitespace = fix
+
+[core]
+    editor = atom --wait
+    excludesfile = ~/.gitignore
+    pager = diff-so-fancy | less --tabs=4 -RFX
+
+[rebase]
+    autosquash = true
+    autostash = true
+
+[pretty]
+    jira = format:Author: %aN <%aE>%nDate:   %ci%n%n%w(73,1,2)%+s%n%+b%x1B
+    stashed = format:%gd: %Cred%h%Creset %Cgreen[%ar]%Creset %s
+
+#
+# valid colors are "normal", "black", "red", "green", "yellow",
+#                  "blue", "magenta", "cyan", "white"
+#
+# valid attributes are "bold", "dim", "ul", "blink", "reverse"
+#
+
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+    ui = true
+
+[color "branch"]
+    current = yellow bold
+    local = yellow
+    remote = red bold
+
+[color "diff"]
+    meta = yellow
+    frag = magenta
+    old = red
+    new = green
+    commit = yellow reverse
+
+[color "status"]
+    added = blue normal bold
+    changed = green
+    untracked = cyan
+
+[color "decorate"]
+       current=black white
+       local=black white
+       plain=black white
+[web]
+    browser = open
+[help]
+    format = web
+[gui]
+    recentrepo = /Users/packy/git/scriptlib
+    recentrepo = /Users/packy/git/ack2
+[push]
+    default = simple
+
+[merge]
+    keepBackup = false
+
+[difftool]
+    prompt = false
+
+[log]
+    date = local
+    decorate = auto
