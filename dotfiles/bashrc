@@ -30,6 +30,8 @@ if ! source $BOOTSTRAP 2>/dev/null; then
     return
 fi
 
+scroll_if_at_bottom
+
 # finally, load all my bash customizations
 if [[ -e $BASHRC_D ]]; then
     SCRIPTS=$(find $BASHRC_D/enabled -name "*.sh" -print | sort)
@@ -52,3 +54,5 @@ if function_exists uniq_path; then
 else
     echoerr "Unable to remove duplicate directories from path; uniq_path() not loaded"
 fi
+
+alias root='sudo -i bash'
