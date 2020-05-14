@@ -104,3 +104,7 @@ function iTerm2_cycle_bgcolor () {
   export TERM_BGCOLOR="${array[0]}"
   iTerm2_bgcolor $TERM_BGCOLOR
 }
+
+function cycle_bgcolor () {
+  iTerm2_cycle_bgcolor "$@"
+}
