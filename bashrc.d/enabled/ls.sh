@@ -32,6 +32,7 @@
 alias   ls='/bin/ls -bG'
 alias   ll='/bin/ls -bGlhH'
 alias  lll='/bin/ls -bGlhpH'
+alias llrt='/bin/ls -bGlhHrt'
 
 # LSCOLORS
 # The value of this variable describes what color to use for which
@@ -113,7 +114,7 @@ function demo_ls_colors () {
     touch $FILE09    ; chgrp $FILEGRP $FILE09 ; chmod g+sx   $FILE09
     mkdir -p $FILE10 ;                          chmod o+w,+t $FILE10
     mkdir -p $FILE11 ;                          chmod o+w    $FILE11
-    
+
     echo
     echo Generate new spec with http://geoff.greer.fm/lscolors/
     echo
@@ -125,7 +126,7 @@ function demo_ls_colors () {
     local  FORMAT06=" 6 - block special (%s): . . . . . . . . . . . . .  "
     local  FORMAT07=" 7 - character special (%s):                        "
     local  FORMAT08=" 8 - executable with setuid bit set (%s):  . . . .  "
-    local  FORMAT09=" 9 - executable with setgid bit set (%s):           "     
+    local  FORMAT09=" 9 - executable with setgid bit set (%s):           "
     local  FORMAT10=" A - dir writeable to others, with sticky bit (%s): "
     local  FORMAT11=" B - dir writeable to others, NO sticky bit (%s):   "
 
