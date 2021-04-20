@@ -7,7 +7,7 @@ fi
 
 function is_production_server () {
   if [[ "$PRODUCTION_SERVERS" != "" ]]; then
-    IFS=':' read -r -a array <<< "$PRODUCTION_SERVERS"
+    IFS='#' read -r -a array <<< "$PRODUCTION_SERVERS"
     for index in "${!array[@]}"; do
       if [[ "${array[index]}" == "$HOSTNAME" ]]; then
         true
@@ -94,7 +94,7 @@ if [ -z ${PROMPT_COMMAND_FAIL+x} ]; then
 fi
 
 if is_production_server; then
-  iTerm2_bgcolor    800
+  iTerm2_bgcolor    600
   iTerm2_titlecolor 888
   iTerm2_SetBadge $(hostname)
 fi
