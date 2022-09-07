@@ -62,6 +62,7 @@ function xheight () {
     HEIGHT=${1:-"50"};
     is_interactive && printf "\e[8;%d;%dt" $HEIGHT $COLUMNS;
 }
+alias xh=xheight
 
 # iTerm2 manipulation
 
