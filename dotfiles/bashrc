@@ -56,3 +56,5 @@ else
 fi
 
 alias root='sudo -i bash'
+alias vbox='sudo -u vbox -i bash'
+
